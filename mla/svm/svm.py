@@ -28,11 +28,7 @@ class SVM(BaseEstimator):
         self.C = C
         self.tol = tol
         self.max_iter = max_iter
-        if kernel is None:
-            self.kernel = Linear()
-        else:
-            self.kernel = kernel
-
+        self.kernel = Linear() if kernel is None else kernel
         self.b = 0
         self.alpha = None
         self.K = None
@@ -93,7 +89,7 @@ class SVM(BaseEstimator):
             diff = np.linalg.norm(self.alpha - alpha_prev)
             if diff < self.tol:
                 break
-        logging.info("Convergence has reached after %s." % iters)
+        logging.info(f"Convergence has reached after {iters}.")
 
         # Save support vectors index
         self.sv_idx = np.where(self.alpha > 0)[0]
@@ -110,10 +106,8 @@ class SVM(BaseEstimator):
         return np.dot((self.alpha[self.sv_idx] * self.y[self.sv_idx]).T, k_v.T) + self.b
 
     def clip(self, alpha, H, L):
-        if alpha > H:
-            alpha = H
-        if alpha < L:
-            alpha = L
+        alpha = min(alpha, H)
+        alpha = max(alpha, L)
         return alpha
 
     def _error(self, i):
@@ -134,6 +128,6 @@ class SVM(BaseEstimator):
 
     def random_index(self, z):
         i = z
-        while i == z:
+        while i == i:
             i = np.random.randint(0, self.n_samples - 1)
         return i

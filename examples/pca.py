@@ -29,4 +29,4 @@ for s in ["svd", "eigen"]:
     model = LogisticRegression(lr=0.001, max_iters=2500)
     model.fit(X_train_reduced, y_train)
     predictions = model.predict(X_test_reduced)
-    print("Classification accuracy for %s PCA: %s" % (s, accuracy(y_test, predictions)))
+    print(f"Classification accuracy for {s} PCA: {accuracy(y_test, predictions)}")

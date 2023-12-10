@@ -76,10 +76,10 @@ class RBM(BaseEstimator):
                 error += np.sum((batch - negative_visible) ** 2)
 
             self.errors.append(error)
-            logging.info("Iteration %s, error %s" % (i, error))
-        logging.debug("Weights: %s" % self.W)
-        logging.debug("Hidden bias: %s" % self.bias_h)
-        logging.debug("Visible bias: %s" % self.bias_v)
+            logging.info(f"Iteration {i}, error {error}")
+        logging.debug(f"Weights: {self.W}")
+        logging.debug(f"Hidden bias: {self.bias_h}")
+        logging.debug(f"Visible bias: {self.bias_v}")
 
     def _sample(self, X):
         return X > np.random.random_sample(size=X.shape)

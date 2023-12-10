@@ -93,7 +93,7 @@ class GradientBoosting(BaseEstimator):
         # Or mean
         # y_pred = np.full(self.n_samples, self.y_mean)
 
-        for n in range(self.n_estimators):
+        for _ in range(self.n_estimators):
             residuals = self.loss.grad(self.y, y_pred)
             tree = Tree(regression=True, criterion=mse_criterion)
             # Pass multiple target values to the tree learner
@@ -120,7 +120,7 @@ class GradientBoosting(BaseEstimator):
     def _predict(self, X=None):
         y_pred = np.zeros(X.shape[0], np.float32)
 
-        for i, tree in enumerate(self.trees):
+        for tree in self.trees:
             y_pred += self.learning_rate * tree.predict(X)
         return y_pred
 

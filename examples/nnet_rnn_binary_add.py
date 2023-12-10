@@ -43,11 +43,11 @@ def addition_dataset(dim=10, n_samples=10000, batch_size=64):
     # Round number of examples for batch processing
     train_b = (X_train.shape[0] // batch_size) * batch_size
     test_b = (X_test.shape[0] // batch_size) * batch_size
-    X_train = X_train[0:train_b]
-    y_train = y_train[0:train_b]
+    X_train = X_train[:train_b]
+    y_train = y_train[:train_b]
 
-    X_test = X_test[0:test_b]
-    y_test = y_test[0:test_b]
+    X_test = X_test[:test_b]
+    y_test = y_test[:test_b]
     return X_train, X_test, y_train, y_test
 
 

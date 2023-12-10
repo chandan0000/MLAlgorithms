@@ -41,7 +41,7 @@ class NeuralNet(BaseEstimator):
         self.batch_size = batch_size
         self.max_epochs = max_epochs
         self._n_layers = 0
-        self.log_metric = True if loss != metric else False
+        self.log_metric = loss != metric
         self.metric_name = metric
         self.bprop_entry = self._find_bprop_entry()
         self.training = False
@@ -60,7 +60,7 @@ class NeuralNet(BaseEstimator):
         # Setup optimizer
         self.optimizer.setup(self)
         self._initialized = True
-        logging.info("Total parameters: %s" % self.n_params)
+        logging.info(f"Total parameters: {self.n_params}")
 
     def _find_bprop_entry(self):
         """Find entry layer for back propagation."""
@@ -103,10 +103,8 @@ class NeuralNet(BaseEstimator):
         if not self._initialized:
             self._setup_layers(X.shape)
 
-        y = []
         X_batch = batch_iterator(X, self.batch_size)
-        for Xb in X_batch:
-            y.append(self.fprop(Xb))
+        y = [self.fprop(Xb) for Xb in X_batch]
         return np.concatenate(y)
 
     @property
@@ -118,10 +116,7 @@ class NeuralNet(BaseEstimator):
     @property
     def parameters(self):
         """Returns a list of all parameters."""
-        params = []
-        for layer in self.parametric_layers:
-            params.append(layer.parameters)
-        return params
+        return [layer.parameters for layer in self.parametric_layers]
 
     def error(self, X=None, y=None):
         """Calculate an error for given examples."""
@@ -167,7 +162,7 @@ class NeuralNet(BaseEstimator):
     @property
     def n_params(self):
         """Return the number of trainable parameters."""
-        return sum([layer.parameters.n_params for layer in self.parametric_layers])
+        return sum(layer.parameters.n_params for layer in self.parametric_layers)
 
     def reset(self):
         self._initialized = False

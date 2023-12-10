@@ -25,10 +25,10 @@ class Optimizer(object):
             loss = self.train_epoch(network)
             loss_history.append(loss)
             if network.verbose:
-                msg = "Epoch:%s, train loss: %s" % (i, loss)
+                msg = f"Epoch:{i}, train loss: {loss}"
                 if network.log_metric:
-                    msg += ", train %s: %s" % (network.metric_name, network.error())
-                msg += ", elapsed: %s sec." % (time.time() - start_time)
+                    msg += f", train {network.metric_name}: {network.error()}"
+                msg += f", elapsed: {time.time() - start_time} sec."
                 logging.info(msg)
         return loss_history
 
@@ -52,8 +52,7 @@ class Optimizer(object):
             self.update(network)
             losses.append(loss)
 
-        epoch_loss = np.mean(losses)
-        return epoch_loss
+        return np.mean(losses)
 
     def train_batch(self, network, X, y):
         loss = np.mean(network.update(X, y))

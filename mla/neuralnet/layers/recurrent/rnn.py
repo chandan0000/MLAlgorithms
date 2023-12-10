@@ -16,10 +16,7 @@ class RNN(Layer, ParamMixin):
         self.inner_init = get_initializer(inner_init)
         self.activation = get_activation(activation)
         self.activation_d = elementwise_grad(self.activation)
-        if parameters is None:
-            self._params = Parameters()
-        else:
-            self._params = parameters
+        self._params = Parameters() if parameters is None else parameters
         self.last_input = None
         self.states = None
         self.hprev = None
@@ -57,10 +54,7 @@ class RNN(Layer, ParamMixin):
 
         self.states = states
         self.hprev = states[:, n_timesteps - 1, :].copy()
-        if self.return_sequences:
-            return states[:, 0:-1, :]
-        else:
-            return states[:, -2, :]
+        return states[:, 0:-1, :] if self.return_sequences else states[:, -2, :]
 
     def backward_pass(self, delta):
         if len(delta.shape) == 2:
@@ -88,7 +82,7 @@ class RNN(Layer, ParamMixin):
             output[:, i, :] = np.dot(d, p["W"].T)
 
         # Change actual gradient arrays
-        for k in grad.keys():
+        for k in grad:
             self._params.update_grad(k, grad[k])
         return output
 

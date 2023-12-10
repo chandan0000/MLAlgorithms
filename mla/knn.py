@@ -58,8 +58,7 @@ class KNNClassifier(KNNBase):
     def aggregate(self, neighbors_targets):
         """Return the most common target label."""
 
-        most_common_label = Counter(neighbors_targets).most_common(1)[0][0]
-        return most_common_label
+        return Counter(neighbors_targets).most_common(1)[0][0]
 
 
 class KNNRegressor(KNNBase):
