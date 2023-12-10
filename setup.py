@@ -23,7 +23,7 @@ setup(
     description='A collection of minimal and clean implementations of machine learning algorithms.',
     long_description=long_description,
     url='https://github.com/rushter/mla',
-    download_url='https://github.com/rushter/mla/tarball/' + __version__,
+    download_url=f'https://github.com/rushter/mla/tarball/{__version__}',
     license='MIT',
     packages=find_packages(exclude=['docs', 'tests*']),
     include_package_data=True,
@@ -31,5 +31,5 @@ setup(
     install_requires=install_requires,
     setup_requires=['numpy>=1.10', 'scipy>=0.17'],
     dependency_links=dependency_links,
-    author_email='gh@rushter.com'
+    author_email='gh@rushter.com',
 )

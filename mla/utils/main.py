@@ -17,9 +17,6 @@ def batch_iterator(X, batch_size=64):
         batch_begin = b * batch_size
         batch_end = batch_begin + batch_size
 
-        X_batch = X[batch_begin:batch_end]
-
-        yield X_batch
-
+        yield X[batch_begin:batch_end]
     if n_batches * batch_size < n_samples:
         yield X[batch_end:]

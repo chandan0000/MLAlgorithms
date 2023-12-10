@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.CRITICAL)
 
 
 def mlp_model(n_actions, batch_size=64):
-    model = NeuralNet(
+    return NeuralNet(
         layers=[Dense(32), Activation("relu"), Dense(n_actions)],
         loss="mse",
         optimizer=Adam(),
@@ -18,7 +18,6 @@ def mlp_model(n_actions, batch_size=64):
         max_epochs=1,
         verbose=False,
     )
-    return model
 
 
 model = DQN(n_episodes=2500, batch_size=64)

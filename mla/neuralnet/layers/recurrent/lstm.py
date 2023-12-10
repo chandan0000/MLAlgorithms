@@ -23,11 +23,7 @@ class LSTM(Layer, ParamMixin):
         self.activation_d = elementwise_grad(self.activation)
         self.sigmoid_d = elementwise_grad(sigmoid)
 
-        if parameters is None:
-            self._params = Parameters()
-        else:
-            self._params = parameters
-
+        self._params = Parameters() if parameters is None else parameters
         self.last_input = None
         self.states = None
         self.outputs = None
@@ -159,7 +155,7 @@ class LSTM(Layer, ParamMixin):
         # TODO: propagate error to the next layer
 
         # Change actual gradient arrays
-        for k in grad.keys():
+        for k in grad:
             self._params.update_grad(k, grad[k])
         return output
 

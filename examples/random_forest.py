@@ -30,8 +30,10 @@ def classification():
     predictions_prob = model.predict(X_test)[:, 1]
     predictions = np.argmax(model.predict(X_test), axis=1)
     #print(predictions.shape)
-    print("classification, roc auc score: %s" % roc_auc_score(y_test, predictions_prob))
-    print("classification, accuracy score: %s" % accuracy_score(y_test, predictions))
+    print(
+        f"classification, roc auc score: {roc_auc_score(y_test, predictions_prob)}"
+    )
+    print(f"classification, accuracy score: {accuracy_score(y_test, predictions)}")
 
 
 def regression():
@@ -44,7 +46,9 @@ def regression():
     model = RandomForestRegressor(n_estimators=50, max_depth=10, max_features=3)
     model.fit(X_train, y_train)
     predictions = model.predict(X_test)
-    print("regression, mse: %s" % mean_squared_error(y_test.flatten(), predictions.flatten()))
+    print(
+        f"regression, mse: {mean_squared_error(y_test.flatten(), predictions.flatten())}"
+    )
 
 
 if __name__ == "__main__":

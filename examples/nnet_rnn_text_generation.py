@@ -33,8 +33,8 @@ X, y, text, chars, char_indices, indices_char = load_nietzsche()
 # Round the number of sequences for batch processing
 items_count = X.shape[0] - (X.shape[0] % 64)
 maxlen = X.shape[1]
-X = X[0:items_count]
-y = y[0:items_count]
+X = X[:items_count]
+y = y[:items_count]
 
 print(X.shape, y.shape)
 # LSTM OR RNN
@@ -64,9 +64,9 @@ for _ in range(25):
     generated = ""
     sentence = text[start_index : start_index + maxlen]
     generated += sentence
-    print('----- Generating with seed: "' + sentence + '"')
+    print(f'----- Generating with seed: "{sentence}"')
     sys.stdout.write(generated)
-    for i in range(100):
+    for _ in range(100):
         x = np.zeros((64, maxlen, len(chars)))
         for t, char in enumerate(sentence):
             x[0, t, char_indices[char]] = 1.0

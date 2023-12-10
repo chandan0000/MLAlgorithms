@@ -22,16 +22,8 @@ class Parameters(object):
             Weight constraints.
             >>> {'b' : MaxNorm()}
         """
-        if constraints is None:
-            self.constraints = {}
-        else:
-            self.constraints = constraints
-
-        if regularizers is None:
-            self.regularizers = {}
-        else:
-            self.regularizers = regularizers
-
+        self.constraints = {} if constraints is None else constraints
+        self.regularizers = {} if regularizers is None else regularizers
         self.initial_bias = bias
         self.scale = scale
         self.init = get_initializer(init)
@@ -71,7 +63,7 @@ class Parameters(object):
     @property
     def n_params(self):
         """Count the number of parameters in this layer."""
-        return sum([np.prod(self._params[x].shape) for x in self._params.keys()])
+        return sum(np.prod(self._params[x].shape) for x in self._params.keys())
 
     def keys(self):
         return self._params.keys()

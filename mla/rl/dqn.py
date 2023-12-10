@@ -126,7 +126,7 @@ class DQN(object):
 
             max_reward = max(max_reward, total_reward)
             logger.info(
-                "Episode: %s, reward %s,  epsilon %s, max reward %s" % (ep, total_reward, self.epsilon, max_reward)
+                f"Episode: {ep}, reward {total_reward},  epsilon {self.epsilon}, max reward {max_reward}"
             )
         logging.info("Training finished.")
 
@@ -142,5 +142,5 @@ class DQN(object):
                 total_reward += reward
                 if done:
                     break
-            logger.info("Episode: %s, reward %s" % (i, total_reward))
+            logger.info(f"Episode: {i}, reward {total_reward}")
         self.env.close()

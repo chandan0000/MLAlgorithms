@@ -57,8 +57,7 @@ class BasicRegression(BaseEstimator):
 
     def _cost(self, X, y, theta):
         prediction = X.dot(theta)
-        error = self.cost_func(y, prediction)
-        return error
+        return self.cost_func(y, prediction)
 
     def fit(self, X, y=None):
         self._setup_input(X, y)
@@ -80,7 +79,7 @@ class BasicRegression(BaseEstimator):
 
     def _train(self):
         self.theta, self.errors = self._gradient_descent()
-        logging.info(" Theta: %s" % self.theta.flatten())
+        logging.info(f" Theta: {self.theta.flatten()}")
 
     def _predict(self, X=None):
         X = self._add_intercept(X)
@@ -97,7 +96,7 @@ class BasicRegression(BaseEstimator):
             theta -= self.lr * delta
 
             errors.append(self._cost(self.X, self.y, theta))
-            logging.info("Iteration %s, error %s" % (i, errors[i]))
+            logging.info(f"Iteration {i}, error {errors[i]}")
 
             error_diff = np.linalg.norm(errors[i - 1] - errors[i])
             if error_diff < self.tolerance:

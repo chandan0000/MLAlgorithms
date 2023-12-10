@@ -23,16 +23,12 @@ def load_mnist():
         else:
             raise ValueError("Unexpected dataset name: %r" % dataset)
 
-        flbl = open(fname_lbl, "rb")
-        magic_nr, size = struct.unpack(">II", flbl.read(8))
-        lbl = pyarray("b", flbl.read())
-        flbl.close()
-
-        fimg = open(fname_img, "rb")
-        magic_nr, size, rows, cols = struct.unpack(">IIII", fimg.read(16))
-        img = pyarray("B", fimg.read())
-        fimg.close()
-
+        with open(fname_lbl, "rb") as flbl:
+            magic_nr, size = struct.unpack(">II", flbl.read(8))
+            lbl = pyarray("b", flbl.read())
+        with open(fname_img, "rb") as fimg:
+            magic_nr, size, rows, cols = struct.unpack(">IIII", fimg.read(16))
+            img = pyarray("B", fimg.read())
         ind = [k for k in range(size) if lbl[k] in digits]
         N = len(ind)
 
@@ -57,7 +53,7 @@ def load_nietzsche():
     text = open(get_filename("data/nietzsche.txt"), "rt").read().lower()
     chars = set(list(text))
     char_indices = {ch: i for i, ch in enumerate(chars)}
-    indices_char = {i: ch for i, ch in enumerate(chars)}
+    indices_char = dict(enumerate(chars))
 
     maxlen = 40
     step = 3

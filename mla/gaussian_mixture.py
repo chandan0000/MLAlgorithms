@@ -106,9 +106,10 @@ class GaussianMixture(BaseEstimator):
 
     def _is_converged(self):
         """Check if the difference of the latest two likelihood is less than the tolerance."""
-        if (len(self.likelihood) > 1) and (self.likelihood[-1] - self.likelihood[-2] <= self.tolerance):
-            return True
-        return False
+        return (
+            len(self.likelihood) > 1
+            and self.likelihood[-1] - self.likelihood[-2] <= self.tolerance
+        )
 
     def _predict(self, X):
         """Get the assignments for X with GMM clusters."""
@@ -131,7 +132,7 @@ class GaussianMixture(BaseEstimator):
 
     def plot(self, data=None, ax=None, holdon=False):
         """Plot contour for 2D data."""
-        if not (len(self.X.shape) == 2 and self.X.shape[1] == 2):
+        if len(self.X.shape) != 2 or self.X.shape[1] != 2:
             raise AttributeError("Only support for visualizing 2D data.")
 
         if ax is None:

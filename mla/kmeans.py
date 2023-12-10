@@ -115,7 +115,9 @@ class KMeans(BaseEstimator):
 
     def _dist_from_centers(self):
         """Calculate distance from centers."""
-        return np.array([min([euclidean_distance(x, c) for c in self.centroids]) for x in self.X])
+        return np.array(
+            [min(euclidean_distance(x, c) for c in self.centroids) for x in self.X]
+        )
 
     def _choose_next_center(self):
         distances = self._dist_from_centers()
@@ -126,9 +128,10 @@ class KMeans(BaseEstimator):
 
     def _is_converged(self, centroids_old, centroids):
         """Check if the distance between old and new centroids is zero."""
-        distance = 0
-        for i in range(self.K):
-            distance += euclidean_distance(centroids_old[i], centroids[i])
+        distance = sum(
+            euclidean_distance(centroids_old[i], centroids[i])
+            for i in range(self.K)
+        )
         return distance == 0
 
     def plot(self, ax=None, holdon=False):

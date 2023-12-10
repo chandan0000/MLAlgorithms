@@ -28,7 +28,7 @@ def classification():
     print(predictions)
     print(predictions.min())
     print(predictions.max())
-    print("classification, roc auc score: %s" % roc_auc_score(y_test, predictions))
+    print(f"classification, roc auc score: {roc_auc_score(y_test, predictions)}")
 
 
 def regression():
@@ -41,7 +41,9 @@ def regression():
     model = GradientBoostingRegressor(n_estimators=25, max_depth=5, max_features=3)
     model.fit(X_train, y_train)
     predictions = model.predict(X_test)
-    print("regression, mse: %s" % mean_squared_error(y_test.flatten(), predictions.flatten()))
+    print(
+        f"regression, mse: {mean_squared_error(y_test.flatten(), predictions.flatten())}"
+    )
 
 
 if __name__ == "__main__":

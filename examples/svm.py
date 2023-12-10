@@ -26,7 +26,7 @@ def classification():
         model = SVM(max_iter=500, kernel=kernel, C=0.6)
         model.fit(X_train, y_train)
         predictions = model.predict(X_test)
-        print("Classification accuracy (%s): %s" % (kernel, accuracy(y_test, predictions)))
+        print(f"Classification accuracy ({kernel}): {accuracy(y_test, predictions)}")
 
 
 if __name__ == "__main__":

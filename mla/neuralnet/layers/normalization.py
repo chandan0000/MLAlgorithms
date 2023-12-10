@@ -90,7 +90,7 @@ class BatchNormalization(Layer, ParamMixin, PhaseMixin):
             out_flat = self._forward_pass(x_flat)
             return out_flat.reshape(N, H, W, C).transpose(0, 3, 1, 2)
         else:
-            raise NotImplementedError("Unknown model with dimensions = {}".format(len(X.shape)))
+            raise NotImplementedError(f"Unknown model with dimensions = {len(X.shape)}")
 
     def _backward_pass(self, delta):
         # unfold the variables stored in cache
@@ -150,7 +150,7 @@ class BatchNormalization(Layer, ParamMixin, PhaseMixin):
             out_flat = self._backward_pass(x_flat)
             return out_flat.reshape(N, H, W, C).transpose(0, 3, 1, 2)
         else:
-            raise NotImplementedError("Unknown model shape: {}".format(X.shape))
+            raise NotImplementedError(f"Unknown model shape: {X.shape}")
 
     def shape(self, x_shape):
         return x_shape

@@ -49,8 +49,8 @@ class PCA(BaseEstimator):
 
         s_squared = s ** 2
         variance_ratio = s_squared / s_squared.sum()
-        logging.info("Explained variance ratio: %s" % (variance_ratio[0: self.n_components]))
-        self.components = Vh[0: self.n_components]
+        logging.info(f"Explained variance ratio: {variance_ratio[:self.n_components]}")
+        self.components = Vh[:self.n_components]
 
     def transform(self, X):
         X = X.copy()

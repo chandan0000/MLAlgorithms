@@ -40,7 +40,7 @@ class BaseFM(BaseEstimator):
         self._train()
 
     def _train(self):
-        for epoch in range(self.max_iter):
+        for _ in range(self.max_iter):
             y_pred = self._predict(self.X)
             loss = self.loss_grad(self.y, y_pred)
             w_grad = np.dot(loss, self.X) / float(self.n_samples)

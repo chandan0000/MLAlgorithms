@@ -116,13 +116,11 @@ class Dropout(Layer, PhaseMixin):
 
     def forward_pass(self, X):
         assert self.p > 0
-        if self.is_training:
-            self._mask = np.random.uniform(size=X.shape) > self.p
-            y = X * self._mask
-        else:
-            y = X * (1.0 - self.p)
+        if not self.is_training:
+            return X * (1.0 - self.p)
 
-        return y
+        self._mask = np.random.uniform(size=X.shape) > self.p
+        return X * self._mask
 
     def backward_pass(self, delta):
         return delta * self._mask

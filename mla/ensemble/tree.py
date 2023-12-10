@@ -142,14 +142,12 @@ class Tree(object):
         if self.loss is not None:
             # Gradient boosting
             self.outcome = self.loss.approximate(targets["actual"], targets["y_pred"])
+        elif self.regression:
+            # Mean value for regression task
+            self.outcome = np.mean(targets["y"])
         else:
-            # Random Forest
-            if self.regression:
-                # Mean value for regression task
-                self.outcome = np.mean(targets["y"])
-            else:
-                # Probability for classification task
-                self.outcome = np.bincount(targets["y"], minlength=self.n_classes) / targets["y"].shape[0]
+            # Probability for classification task
+            self.outcome = np.bincount(targets["y"], minlength=self.n_classes) / targets["y"].shape[0]
 
     def predict_row(self, row):
         """Predict single row."""

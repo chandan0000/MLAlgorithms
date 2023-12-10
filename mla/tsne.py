@@ -75,7 +75,7 @@ class TSNE(BaseEstimator):
             Y = Y - np.mean(Y, 0)
 
             error = np.sum(P * np.log(P / Q_n))
-            logging.info("Iteration %s, error %s" % (iter_num, error))
+            logging.info(f"Iteration {iter_num}, error {error}")
         return Y
 
     def _get_pairwise_affinities(self, X):
